@@ -14,7 +14,8 @@ function bytesToBase64url(bytes: Uint8Array): string {
 }
 
 function base64urlToBinary(b64url: string): string {
-  const b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+  let b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+  while (b64.length % 4) b64 += "="; // 补齐 padding，部分 atob 实现对无 padding 严格
   return atob(b64);
 }
 
@@ -26,30 +27,38 @@ function secret(): string {
   );
 }
 
-async function verifyToken(token: string | undefined): Promise<boolean> {
-  if (!token) return false;
-  const [payload, sig] = token.split(".");
-  if (!payload || !sig) return false;
+// 返回具体的鉴权结论，便于诊断被踢回登录页的真正原因。
+// ok | nocookie | badformat | badsig | badpayload | future | expired | error
+async function classify(token: string | undefined): Promise<string> {
+  try {
+    if (!token) return "nocookie";
+    const [payload, sig] = token.split(".");
+    if (!payload || !sig) return "badformat";
 
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret()),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const mac = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    new TextEncoder().encode(payload),
-  );
-  const expected = bytesToBase64url(new Uint8Array(mac));
-  if (expected !== sig) return false;
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(secret()),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"],
+    );
+    const mac = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      new TextEncoder().encode(payload),
+    );
+    const expected = bytesToBase64url(new Uint8Array(mac));
+    if (expected !== sig) return "badsig";
 
-  const issued = Number(base64urlToBinary(payload));
-  if (!Number.isFinite(issued)) return false;
-  const age = Date.now() - issued;
-  return age >= 0 && age < MAX_AGE_MS;
+    const issued = Number(base64urlToBinary(payload));
+    if (!Number.isFinite(issued)) return "badpayload";
+    const age = Date.now() - issued;
+    if (age < 0) return "future";
+    if (age >= MAX_AGE_MS) return "expired";
+    return "ok";
+  } catch {
+    return "error";
+  }
 }
 
 export async function proxy(req: NextRequest) {
@@ -61,13 +70,14 @@ export async function proxy(req: NextRequest) {
   }
 
   const token = req.cookies.get(SESSION_COOKIE)?.value;
-  if (await verifyToken(token)) {
+  const reason = await classify(token);
+  if (reason === "ok") {
     return NextResponse.next();
   }
 
   const url = req.nextUrl.clone();
   url.pathname = "/admin/login";
-  url.search = "";
+  url.search = `?r=${reason}`; // 临时诊断：告诉我们为什么失效
   return NextResponse.redirect(url);
 }
 
