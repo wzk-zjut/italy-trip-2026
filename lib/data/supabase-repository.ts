@@ -19,6 +19,16 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
+// 关键：supabase-js 会忽略值为 undefined 的字段，导致「清空字段」在 update 时
+// 无法把列写空。这里把 undefined 显式转成 null，确保清空能真正落库。
+function nullifyUndefined(
+  obj: Record<string, unknown>,
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const k in obj) out[k] = obj[k] === undefined ? null : obj[k];
+  return out;
+}
+
 // 通用 upsert：有 id → update；无 id → insert（由 DB 生成 id）。
 async function upsert<T>(
   table: string,
@@ -30,7 +40,7 @@ async function upsert<T>(
     const { id, ...rest } = input;
     const { data, error } = await db
       .from(table)
-      .update({ ...rest, updated_at: ts })
+      .update({ ...nullifyUndefined(rest), updated_at: ts })
       .eq("id", id)
       .select()
       .single();
