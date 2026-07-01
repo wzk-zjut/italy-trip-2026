@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hotel-rome",
+    "city": "罗马",
+    "name": "Domus dei Borgia",
+    "check_in": "2026-09-24",
+    "check_out": "2026-09-28",
+    "nights": 4,
+    "area_note": "罗马蒙蒂区，靠近斗兽场、古罗马区域和 Cavour 地铁站，适合罗马前几天游览。",
+    "transport_note": "地铁 B 线 Cavour 站附近；机场深夜抵达建议打车直达。",
+    "public_note": "9/24 约 23:00 落地，预计凌晨入住，需提前确认深夜入住方式与可能的夜间入住费。",
+    "sort_order": 1,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "hotel-florence",
+    "city": "佛罗伦萨",
+    "name": "Domus Plaza",
+    "check_in": "2026-09-28",
+    "check_out": "2026-09-30",
+    "nights": 2,
+    "area_note": "佛罗伦萨老城核心，步行可达大教堂、领主广场、老桥。",
+    "transport_note": "从 Firenze S.M.N. 火车站步行可达。",
+    "public_note": "",
+    "sort_order": 2,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "hotel-milan",
+    "city": "米兰",
+    "name": "APARTMENT MIKI - MAURO MACCHI 91",
+    "check_in": "2026-09-30",
+    "check_out": "2026-10-02",
+    "nights": 2,
+    "area_note": "靠近 Milano Centrale 一带，适合高铁进出米兰。",
+    "transport_note": "距米兰中央站步行约 10 分钟。",
+    "public_note": "公寓型住宿，需确认自助入住、行李寄存、电梯与城市税。",
+    "sort_order": 3,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "hotel-venice",
+    "city": "威尼斯",
+    "name": "Abbazia De Luxe",
+    "check_in": "2026-10-02",
+    "check_out": "2026-10-03",
+    "nights": 1,
+    "area_note": "靠近 Venezia Santa Lucia 火车站，适合只住一晚、次日前往机场。",
+    "transport_note": "从威尼斯 S. Lucia 火车站步行可达，免拖行李过太多桥。",
+    "public_note": "",
+    "sort_order": 4,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  }
+]

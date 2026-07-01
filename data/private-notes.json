@@ -1,0 +1,18 @@
+[
+  {
+    "id": "note-rome-checkin",
+    "entity_type": "hotel",
+    "entity_id": "hotel-rome",
+    "note": "【示例私密备注 · 仅后台可见】可在此记录预订平台确认号、房东联系方式、深夜入住门锁密码等。请勿写入公开备注。",
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "note-vatican-ticket",
+    "entity_type": "booking",
+    "entity_id": "booking-vatican",
+    "note": "【示例私密备注 · 仅后台可见】此处可保存票据代码 / 预订邮箱 / 二维码来源链接，公开页永不展示。",
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  }
+]

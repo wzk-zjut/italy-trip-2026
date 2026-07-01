@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
+/* =====================================================================
+   Design tokens —— 清爽、平静、旅行卡片风格（mobile-first）
+   ===================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f5f2; /* 温暖的米白底 */
+  --surface: #ffffff; /* 卡片表面 */
+  --surface-muted: #f2f0eb; /* 次级表面 */
+  --foreground: #1c1b19; /* 主文字（墨色） */
+  --muted: #6b6864; /* 次要文字 */
+  --border: #e7e4de; /* 描边 */
+  --accent: #a4552f; /* 克制的赤陶色，仅用于点缀/交互 */
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --font-sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden; /* 防止手机端横向溢出 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 底部导航的安全区适配（iPhone 底部横条） */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }
