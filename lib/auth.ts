@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 // 说明：口令与密钥都来自环境变量，不硬编码；Phase 2 可替换为 Supabase Auth。
 
 export const SESSION_COOKIE = "italy_admin";
-const MAX_AGE_SECONDS = 60 * 60 * 24 * 365; // 1 年：本设备登录一次基本不再校验
+const MAX_AGE_SECONDS = 60 * 60 * 24 * 30; // 1 个月（30 天）
 
 function secret(): string {
   // 优先 SESSION_SECRET；缺省时退化到 ADMIN_PASSCODE 派生（会话仍有效，

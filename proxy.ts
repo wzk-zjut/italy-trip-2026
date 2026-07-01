@@ -5,7 +5,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // 运行在 Edge 运行时，使用 Web Crypto 校验与 lib/auth.ts 相同的 HMAC 签名 cookie。
 
 const SESSION_COOKIE = "italy_admin";
-const MAX_AGE_MS = 1000 * 60 * 60 * 24 * 365; // 1 年（与 lib/auth.ts 保持一致）
+const MAX_AGE_MS = 1000 * 60 * 60 * 24 * 30; // 1 个月（与 lib/auth.ts 保持一致）
 
 function bytesToBase64url(bytes: Uint8Array): string {
   let bin = "";
