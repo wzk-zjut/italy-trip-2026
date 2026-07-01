@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect } from "react";
 import { login, type LoginState } from "../auth-actions";
 import { Button } from "@/components/ui/Button";
 import { LockIcon } from "@/components/ui/icons";
@@ -16,13 +16,6 @@ export default function AdminLoginPage() {
   useEffect(() => {
     if (state.ok) window.location.assign("/admin");
   }, [state.ok]);
-
-  // 临时诊断：被中间件踢回登录页时，URL 带 ?r=原因，这里显示出来
-  const [reason, setReason] = useState<string | null>(null);
-  useEffect(() => {
-    const r = new URLSearchParams(window.location.search).get("r");
-    if (r) setReason(r);
-  }, []);
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-12">
@@ -55,12 +48,6 @@ export default function AdminLoginPage() {
           {pending ? "登录中…" : "登录"}
         </Button>
       </form>
-
-      {reason && (
-        <p className="rounded-lg bg-surface-muted px-3 py-2 text-center text-xs text-muted">
-          调试：登录态失效原因 = <span className="font-mono text-foreground">{reason}</span>
-        </p>
-      )}
 
       <Link
         href="/"

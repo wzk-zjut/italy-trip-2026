@@ -79,11 +79,18 @@ export default async function AdminHomePage() {
         </div>
       )}
 
-      <div className="rounded-xl border border-dashed border-border bg-surface px-3.5 py-3 text-xs text-muted">
-        Phase 1：编辑会写入本地 <code className="text-foreground">data/*.json</code>
-        ，仅在可写环境（本地 <code>npm run dev</code> 或自有可写盘服务器）持久化。
-        Vercel 只读，需切到 Supabase（见 README）。
-      </div>
+      {process.env.DATA_BACKEND === "supabase" ? (
+        <div className="rounded-xl border border-dashed border-border bg-surface px-3.5 py-3 text-xs text-muted">
+          已接入 Supabase：后台修改会实时保存到云端，公开页和同行人都会同步看到。
+        </div>
+      ) : (
+        <div className="rounded-xl border border-dashed border-border bg-surface px-3.5 py-3 text-xs text-muted">
+          Phase 1：编辑会写入本地{" "}
+          <code className="text-foreground">data/*.json</code>
+          ，仅在可写环境（本地 <code>npm run dev</code>{" "}
+          或自有可写盘服务器）持久化。Vercel 只读，需切到 Supabase（见 README）。
+        </div>
+      )}
     </div>
   );
 }

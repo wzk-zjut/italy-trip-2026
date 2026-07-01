@@ -187,3 +187,10 @@ export const FileTextIcon = ({ className }: IconProps) => (
     <path d="M14 2v4h4M8.5 12h7M8.5 16h7M8.5 8h3" />
   </Svg>
 );
+
+export const EyeIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+    <circle cx="12" cy="12" r="3" />
+  </Svg>
+);

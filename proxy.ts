@@ -77,7 +77,7 @@ export async function proxy(req: NextRequest) {
 
   const url = req.nextUrl.clone();
   url.pathname = "/admin/login";
-  url.search = `?r=${reason}`; // 临时诊断：告诉我们为什么失效
+  url.search = "";
   return NextResponse.redirect(url);
 }
 
