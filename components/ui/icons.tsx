@@ -161,6 +161,13 @@ export const ListIcon = ({ className }: IconProps) => (
   </Svg>
 );
 
+export const CameraIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M6 7l1.2-2h9.6L18 7h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h2Z" />
+    <circle cx="12" cy="13" r="3.2" />
+  </Svg>
+);
+
 export const DownloadIcon = ({ className }: IconProps) => (
   <Svg className={className}>
     <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2" />

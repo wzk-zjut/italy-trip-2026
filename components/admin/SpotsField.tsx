@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { Spot, Slot } from "@/types";
-import { TextInput, TextArea, Select } from "./fields";
-import { PlusIcon, TrashIcon } from "@/components/ui/icons";
+import { TextInput, Select } from "./fields";
+import { PlusIcon, TrashIcon, CameraIcon } from "@/components/ui/icons";
+import { compressImage } from "@/lib/utils/compress";
+import { uploadSpotImage } from "@/app/admin/upload-actions";
 
 const SLOTS: { value: Slot; label: string }[] = [
   { value: "morning", label: "上午" },
@@ -19,7 +21,37 @@ function newId(): string {
   }
 }
 
-// 景点列表编辑：状态放在 React 里，同步写入一个隐藏 input(JSON)，随表单提交。
+// 单张缩略图：加载失败（例如仅填了本地路径但文件未放）时显示「缺图」占位，仍可删除。
+function Thumb({ src, onRemove }: { src: string; onRemove: () => void }) {
+  const [broken, setBroken] = useState(false);
+  return (
+    <div className="relative h-16 w-16 shrink-0">
+      {broken ? (
+        <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-surface text-[10px] text-muted ring-1 ring-border">
+          缺图
+        </div>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt=""
+          className="h-16 w-16 rounded-lg object-cover ring-1 ring-border"
+          onError={() => setBroken(true)}
+        />
+      )}
+      <button
+        type="button"
+        onClick={onRemove}
+        aria-label="移除图片"
+        className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs leading-none text-white"
+      >
+        ×
+      </button>
+    </div>
+  );
+}
+
+// 景点列表编辑：状态放在 React 里，同步写入隐藏 input(JSON)，随表单提交。
 export function SpotsField({
   name,
   defaultValue,
@@ -28,6 +60,8 @@ export function SpotsField({
   defaultValue: Spot[];
 }) {
   const [spots, setSpots] = useState<Spot[]>(defaultValue);
+  const [uploading, setUploading] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const update = (i: number, patch: Partial<Spot>) =>
     setSpots((prev) => prev.map((s, j) => (j === i ? { ...s, ...patch } : s)));
@@ -38,6 +72,41 @@ export function SpotsField({
     ]);
   const remove = (i: number) =>
     setSpots((prev) => prev.filter((_, j) => j !== i));
+  const addImage = (i: number, url: string) =>
+    setSpots((prev) =>
+      prev.map((s, j) =>
+        j === i ? { ...s, images: [...(s.images ?? []), url] } : s,
+      ),
+    );
+  const removeImage = (i: number, k: number) =>
+    setSpots((prev) =>
+      prev.map((s, j) =>
+        j === i
+          ? { ...s, images: (s.images ?? []).filter((_, x) => x !== k) }
+          : s,
+      ),
+    );
+
+  const onPick = async (i: number, e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // 允许再次选同一文件
+    if (!file) return;
+    const id = spots[i].id;
+    setError(null);
+    setUploading(id);
+    try {
+      const compressed = await compressImage(file);
+      const fd = new FormData();
+      fd.append("file", compressed);
+      const res = await uploadSpotImage(fd);
+      if (res.error) setError(res.error);
+      else if (res.url) addImage(i, res.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "上传失败");
+    } finally {
+      setUploading(null);
+    }
+  };
 
   return (
     <div className="space-y-2.5">
@@ -78,18 +147,33 @@ export function SpotsField({
             </button>
           </div>
 
-          <TextArea
-            value={(sp.images ?? []).join("\n")}
-            onChange={(e) =>
-              update(i, {
-                images: e.target.value
-                  .split("\n")
-                  .map((x) => x.trim())
-                  .filter(Boolean),
-              })
-            }
-            placeholder="图片路径，每行一个，如 /images/colosseo.jpg"
-          />
+          {/* 图片：缩略图 + 拍照/选图上传 */}
+          <div className="flex flex-wrap items-center gap-2">
+            {(sp.images ?? []).map((src, k) => (
+              <Thumb key={`${src}-${k}`} src={src} onRemove={() => removeImage(i, k)} />
+            ))}
+            <label
+              className={`flex h-16 w-16 shrink-0 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-lg border border-dashed border-border text-[10px] text-muted ${
+                uploading === sp.id ? "opacity-60" : ""
+              }`}
+            >
+              {uploading === sp.id ? (
+                "上传中…"
+              ) : (
+                <>
+                  <CameraIcon className="h-5 w-5" />
+                  拍照/选图
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={uploading === sp.id}
+                onChange={(e) => onPick(i, e)}
+              />
+            </label>
+          </div>
 
           <TextInput
             value={sp.note ?? ""}
@@ -98,6 +182,8 @@ export function SpotsField({
           />
         </div>
       ))}
+
+      {error && <p className="text-sm text-rose-600">{error}</p>}
 
       <button
         type="button"
