@@ -41,3 +41,27 @@ body {
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+/* ===== 打印 / 导出 PDF ===== */
+@page {
+  margin: 14mm 12mm;
+}
+
+@media print {
+  /* 打印时隐藏底部导航与仅屏幕元素 */
+  nav.site-bottom-nav,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  /* 每天 / 每段尽量不跨页拆分 */
+  .print-day,
+  .print-section {
+    break-inside: avoid;
+  }
+}

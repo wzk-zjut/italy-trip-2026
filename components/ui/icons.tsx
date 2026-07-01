@@ -160,3 +160,23 @@ export const ListIcon = ({ className }: IconProps) => (
     <path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01" />
   </Svg>
 );
+
+export const DownloadIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2" />
+  </Svg>
+);
+
+export const CopyIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M9 9h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Z" />
+    <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
+  </Svg>
+);
+
+export const FileTextIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M6 2h8l4 4v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z" />
+    <path d="M14 2v4h4M8.5 12h7M8.5 16h7M8.5 8h3" />
+  </Svg>
+);

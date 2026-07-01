@@ -49,7 +49,7 @@ export function BottomNav() {
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <nav className="pb-safe fixed inset-x-0 bottom-0 z-20 mx-auto w-full max-w-[640px] border-t border-border bg-surface/95 backdrop-blur">
+    <nav className="site-bottom-nav pb-safe fixed inset-x-0 bottom-0 z-20 mx-auto w-full max-w-[640px] border-t border-border bg-surface/95 backdrop-blur">
       <ul className="flex items-stretch justify-around">
         {items.map((item) => {
           const active = item.match(pathname);
