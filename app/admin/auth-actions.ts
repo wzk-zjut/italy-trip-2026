@@ -9,7 +9,7 @@ import {
   checkPasscode,
 } from "@/lib/auth";
 
-export type LoginState = { error?: string };
+export type LoginState = { ok?: boolean; error?: string };
 
 export async function login(
   _prev: LoginState,
@@ -27,9 +27,12 @@ export async function login(
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: SESSION_MAX_AGE,
+    maxAge: SESSION_MAX_AGE, // 秒
+    expires: new Date(Date.now() + SESSION_MAX_AGE * 1000), // 双保险：部分浏览器更认 Expires
   });
-  redirect("/admin");
+  // 不在 action 里 redirect（server action + redirect + cookie 是易错组合）；
+  // 交给客户端在拿到 ok 后做整页跳转，确保 cookie 已落地后再请求 /admin。
+  return { ok: true };
 }
 
 export async function logout(): Promise<void> {

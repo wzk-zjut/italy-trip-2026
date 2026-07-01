@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { login, type LoginState } from "../auth-actions";
 import { Button } from "@/components/ui/Button";
 import { LockIcon } from "@/components/ui/icons";
@@ -11,6 +11,11 @@ export default function AdminLoginPage() {
     login,
     {},
   );
+
+  // 登录成功后整页跳转到 /admin（此时 cookie 已由 action 响应写入浏览器）
+  useEffect(() => {
+    if (state.ok) window.location.assign("/admin");
+  }, [state.ok]);
 
   return (
     <div className="mx-auto max-w-sm space-y-6 pt-12">
