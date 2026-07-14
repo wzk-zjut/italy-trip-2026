@@ -89,7 +89,6 @@ export interface Booking {
 // content 为纯文本，其中的网址在展示时自动变成可点链接。全部为公开信息。
 export interface Guide {
   id: string;
-  icon?: string; // emoji
   title: string;
   category?: string; // 如 交通 / 餐饮 / 通用
   content: string;

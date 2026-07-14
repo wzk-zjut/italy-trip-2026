@@ -43,7 +43,6 @@ export function AdminGuideEditor({ guides }: { guides: Guide[] }) {
               <div className="min-w-0">
                 <p className="text-xs text-muted">{g.category || "贴士"}</p>
                 <p className="truncate font-medium text-foreground">
-                  {g.icon ? `${g.icon} ` : ""}
                   {g.title}
                 </p>
               </div>
@@ -91,20 +90,13 @@ function GuideForm({
     <form action={formAction} className="space-y-3.5">
       {guide && <input type="hidden" name="id" value={guide.id} />}
 
-      <div className="grid grid-cols-3 gap-3">
-        <Field label="图标">
-          <TextInput name="icon" defaultValue={guide?.icon} placeholder="🚇" />
-        </Field>
-        <div className="col-span-2">
-          <Field label="分类">
-            <TextInput
-              name="category"
-              defaultValue={guide?.category}
-              placeholder="交通 / 餐饮…（可选）"
-            />
-          </Field>
-        </div>
-      </div>
+      <Field label="分类">
+        <TextInput
+          name="category"
+          defaultValue={guide?.category}
+          placeholder="交通 / 餐饮…（可选）"
+        />
+      </Field>
 
       <Field label="标题">
         <TextInput name="title" defaultValue={guide?.title} required />

@@ -47,7 +47,7 @@ const bookingCols = [
   "public_note", "sort_order", "created_at", "updated_at",
 ];
 const guideCols = [
-  "id", "icon", "title", "category", "content", "sort_order", "created_at", "updated_at",
+  "id", "title", "category", "content", "sort_order", "created_at", "updated_at",
 ];
 const noteCols = [
   "id", "entity_type", "entity_id", "note", "created_at", "updated_at",

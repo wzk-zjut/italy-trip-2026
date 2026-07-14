@@ -240,7 +240,6 @@ export async function saveGuideAction(
 
     await repo.saveGuide({
       id: opt(fd, "id"),
-      icon: opt(fd, "icon"),
       title,
       category: opt(fd, "category"),
       content: str(fd, "content"),
