@@ -3,6 +3,7 @@ import type {
   Hotel,
   Booking,
   PrivateNote,
+  Guide,
   EntityType,
 } from "@/types";
 
@@ -20,6 +21,9 @@ export type PrivateNoteInput = Omit<
   PrivateNote,
   "id" | "created_at" | "updated_at"
 > & { id?: string };
+export type GuideInput = Omit<Guide, "id" | "created_at" | "updated_at"> & {
+  id?: string;
+};
 
 // 统一的数据访问接口。JSON 实现（Phase 1）与 Supabase 实现（Phase 2）都遵守它，
 // 业务代码只依赖这个接口，切换后端无需改动页面。
@@ -38,6 +42,11 @@ export interface TripRepository {
   deleteHotel(id: string): Promise<void>;
   saveBooking(input: BookingInput): Promise<Booking>;
   deleteBooking(id: string): Promise<void>;
+
+  // ---- 实用贴士 / 攻略 ----
+  getGuides(): Promise<Guide[]>;
+  saveGuide(input: GuideInput): Promise<Guide>;
+  deleteGuide(id: string): Promise<void>;
 
   // ---- 私密备注（仅后台）----
   getPrivateNotes(

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "guide-transport",
+    "icon": "🚇",
+    "title": "地铁 / 火车怎么坐",
+    "category": "交通",
+    "content": "城市内：用 Google Maps 或 Citymapper 输入目的地，跟着地铁/公交走即可。\n城际高铁：Trenitalia（红/银箭）与 Italo 两家，官网或 App 提前买更便宜；认准站名（罗马 Termini、佛罗伦萨 S.M.N.、米兰 Centrale、威尼斯 S. Lucia）。\n纸质票上车前在站台打票机验票，电子票免验。\n\n小红书搜「意大利高铁购票」有详细图文 👉 https://www.xiaohongshu.com/",
+    "sort_order": 1,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "guide-food",
+    "icon": "🍝",
+    "title": "怎么找附近好吃的餐馆",
+    "category": "餐饮",
+    "content": "Google Maps 搜「restaurant」或「trattoria」，按评分和评论数排，避开景点门口的游客店。\n菜单上「coperto」是餐位费，属正常；小费非强制。\n想吃地道的：找本地人多、菜单没有一堆外语翻译的小馆子。\n\n小红书搜「罗马 / 佛罗伦萨 美食」有很多本地推荐 👉 https://www.xiaohongshu.com/",
+    "sort_order": 2,
+    "created_at": "2026-07-01T00:00:00.000Z",
+    "updated_at": "2026-07-01T00:00:00.000Z"
+  }
+]

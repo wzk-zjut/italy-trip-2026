@@ -9,6 +9,7 @@ const read = (f) => JSON.parse(readFileSync(join(root, "data", f), "utf8"));
 const days = read("trip-days.json");
 const hotels = read("hotels.json");
 const bookings = read("bookings.json");
+const guides = read("guides.json");
 const notes = read("private-notes.json");
 
 function val(v) {
@@ -45,6 +46,9 @@ const bookingCols = [
   "id", "type", "title", "date", "time", "city", "status", "is_important",
   "public_note", "sort_order", "created_at", "updated_at",
 ];
+const guideCols = [
+  "id", "icon", "title", "category", "content", "sort_order", "created_at", "updated_at",
+];
 const noteCols = [
   "id", "entity_type", "entity_id", "note", "created_at", "updated_at",
 ];
@@ -59,9 +63,10 @@ const out = `-- ================================================================
 ${insert("trip_days", dayCols, days)}
 ${insert("hotels", hotelCols, hotels)}
 ${insert("bookings", bookingCols, bookings)}
+${insert("guides", guideCols, guides)}
 ${insert("private_notes", noteCols, notes)}`;
 
 writeFileSync(join(root, "supabase", "seed.sql"), out, "utf8");
 console.log(
-  `wrote supabase/seed.sql (${days.length} days, ${hotels.length} hotels, ${bookings.length} bookings, ${notes.length} notes)`,
+  `wrote supabase/seed.sql (${days.length} days, ${hotels.length} hotels, ${bookings.length} bookings, ${guides.length} guides, ${notes.length} notes)`,
 );

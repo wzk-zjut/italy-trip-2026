@@ -8,6 +8,7 @@ const tabs = [
   { href: "/admin/days", label: "行程" },
   { href: "/admin/hotels", label: "酒店" },
   { href: "/admin/bookings", label: "票务" },
+  { href: "/admin/guides", label: "贴士" },
 ];
 
 export function AdminTabs() {

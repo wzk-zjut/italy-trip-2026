@@ -85,6 +85,19 @@ export interface Booking {
   updated_at: string;
 }
 
+// 实用贴士 / 攻略：不绑定某一天的纯描述内容（如何搜餐馆、如何坐地铁等）。
+// content 为纯文本，其中的网址在展示时自动变成可点链接。全部为公开信息。
+export interface Guide {
+  id: string;
+  icon?: string; // emoji
+  title: string;
+  category?: string; // 如 交通 / 餐饮 / 通用
+  content: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 // 私密备注：单独一张表，仅后台登录后可读写。
 export interface PrivateNote {
   id: string;

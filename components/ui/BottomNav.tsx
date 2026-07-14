@@ -34,6 +34,14 @@ const items: NavItem[] = [
     ),
   },
   {
+    href: "/tips",
+    label: "贴士",
+    match: (p) => p.startsWith("/tips"),
+    icon: (
+      <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.9 1 1 1.7l.2.4h4.6l.2-.4c.1-.7.5-1.3 1-1.7A6 6 0 0 0 12 3Z" />
+    ),
+  },
+  {
     href: "/admin",
     label: "管理",
     match: (p) => p.startsWith("/admin"),

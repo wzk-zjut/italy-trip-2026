@@ -5,6 +5,7 @@ import type {
   Hotel,
   Booking,
   PrivateNote,
+  Guide,
 } from "@/types";
 import type {
   TripRepository,
@@ -12,6 +13,7 @@ import type {
   HotelInput,
   BookingInput,
   PrivateNoteInput,
+  GuideInput,
 } from "./repository";
 import { readerClient, serviceClient } from "@/lib/supabase/server";
 
@@ -120,6 +122,23 @@ export const supabaseRepository: TripRepository = {
   deleteHotel: (id) => remove("hotels", id),
   saveBooking: (input: BookingInput) => upsert<Booking>("bookings", { ...input }),
   deleteBooking: (id) => remove("bookings", id),
+
+  // ---------------- 贴士 ----------------
+  async getGuides() {
+    try {
+      const { data, error } = await readerClient()
+        .from("guides")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (error) throw new Error(error.message);
+      return (data ?? []) as Guide[];
+    } catch {
+      // 表可能尚未创建（未跑 0003_guides.sql）；容错返回空，避免公开页报错
+      return [];
+    }
+  },
+  saveGuide: (input: GuideInput) => upsert<Guide>("guides", { ...input }),
+  deleteGuide: (id) => remove("guides", id),
 
   // ---------------- 私密备注（service_role，anon 无权限）----------------
   async getPrivateNotes(entityType, entityId) {

@@ -194,3 +194,9 @@ export const EyeIcon = ({ className }: IconProps) => (
     <circle cx="12" cy="12" r="3" />
   </Svg>
 );
+
+export const TipIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.9 1 1 1.7l.2.4h4.6l.2-.4c.1-.7.5-1.3 1-1.7A6 6 0 0 0 12 3Z" />
+  </Svg>
+);

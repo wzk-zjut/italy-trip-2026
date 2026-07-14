@@ -226,3 +226,35 @@ export async function deleteBookingAction(id: string): Promise<void> {
   await upsertPrivateNote(repo, "booking", id, "");
   revalidateAll();
 }
+
+// -------------------------------- 贴士 --------------------------------
+export async function saveGuideAction(
+  _prev: SaveState,
+  fd: FormData,
+): Promise<SaveState> {
+  await requireAdmin();
+  try {
+    const repo = getRepository();
+    const title = str(fd, "title");
+    if (!title) return { ok: false, error: "标题为必填。" };
+
+    await repo.saveGuide({
+      id: opt(fd, "id"),
+      icon: opt(fd, "icon"),
+      title,
+      category: opt(fd, "category"),
+      content: str(fd, "content"),
+      sort_order: num(fd, "sort_order"),
+    });
+    revalidateAll();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "保存失败" };
+  }
+}
+
+export async function deleteGuideAction(id: string): Promise<void> {
+  await requireAdmin();
+  await getRepository().deleteGuide(id);
+  revalidateAll();
+}

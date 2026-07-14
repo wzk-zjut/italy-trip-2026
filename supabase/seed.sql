@@ -34,6 +34,19 @@ insert into public.bookings (id, type, title, date, time, city, status, is_impor
   ('booking-venice-airport', 'todo', '威尼斯前往机场', '2026-10-03', '', '威尼斯 → 机场', 'todo', true, '配合同行人 17:45 航班，建议下午较早出发；先确认机场是 VCE 还是 TSF。', 6, '2026-07-01T00:00:00.000Z', '2026-07-01T00:00:00.000Z')
 on conflict (id) do nothing;
 
+insert into public.guides (id, icon, title, category, content, sort_order, created_at, updated_at) values
+  ('guide-transport', '🚇', '地铁 / 火车怎么坐', '交通', '城市内：用 Google Maps 或 Citymapper 输入目的地，跟着地铁/公交走即可。
+城际高铁：Trenitalia（红/银箭）与 Italo 两家，官网或 App 提前买更便宜；认准站名（罗马 Termini、佛罗伦萨 S.M.N.、米兰 Centrale、威尼斯 S. Lucia）。
+纸质票上车前在站台打票机验票，电子票免验。
+
+小红书搜「意大利高铁购票」有详细图文 👉 https://www.xiaohongshu.com/', 1, '2026-07-01T00:00:00.000Z', '2026-07-01T00:00:00.000Z'),
+  ('guide-food', '🍝', '怎么找附近好吃的餐馆', '餐饮', 'Google Maps 搜「restaurant」或「trattoria」，按评分和评论数排，避开景点门口的游客店。
+菜单上「coperto」是餐位费，属正常；小费非强制。
+想吃地道的：找本地人多、菜单没有一堆外语翻译的小馆子。
+
+小红书搜「罗马 / 佛罗伦萨 美食」有很多本地推荐 👉 https://www.xiaohongshu.com/', 2, '2026-07-01T00:00:00.000Z', '2026-07-01T00:00:00.000Z')
+on conflict (id) do nothing;
+
 insert into public.private_notes (id, entity_type, entity_id, note, created_at, updated_at) values
   ('note-rome-checkin', 'hotel', 'hotel-rome', '【示例私密备注 · 仅后台可见】可在此记录预订平台确认号、房东联系方式、深夜入住门锁密码等。请勿写入公开备注。', '2026-07-01T00:00:00.000Z', '2026-07-01T00:00:00.000Z'),
   ('note-vatican-ticket', 'booking', 'booking-vatican', '【示例私密备注 · 仅后台可见】此处可保存票据代码 / 预订邮箱 / 二维码来源链接，公开页永不展示。', '2026-07-01T00:00:00.000Z', '2026-07-01T00:00:00.000Z')

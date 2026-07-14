@@ -9,6 +9,7 @@ import type {
   Hotel,
   Booking,
   PrivateNote,
+  Guide,
   EntityType,
 } from "@/types";
 import type {
@@ -17,6 +18,7 @@ import type {
   HotelInput,
   BookingInput,
   PrivateNoteInput,
+  GuideInput,
 } from "./repository";
 
 // Phase 1 数据源：仓库根目录下的 data/*.json。
@@ -30,6 +32,7 @@ const FILES = {
   tripDays: "trip-days.json",
   hotels: "hotels.json",
   bookings: "bookings.json",
+  guides: "guides.json",
   privateNotes: "private-notes.json",
 } as const;
 
@@ -196,6 +199,49 @@ export const jsonRepository: TripRepository = {
     await writeAll(
       FILES.bookings,
       rows.filter((b) => b.id !== id),
+    );
+  },
+
+  // ---------------- 贴士 ----------------
+  async getGuides() {
+    const rows = await readAll<Guide>(FILES.guides);
+    return rows.sort(bySortOrder);
+  },
+
+  async saveGuide(input: GuideInput) {
+    const rows = await readAll<Guide>(FILES.guides);
+    const ts = now();
+    if (input.id) {
+      const idx = rows.findIndex((g) => g.id === input.id);
+      if (idx >= 0) {
+        const updated: Guide = {
+          ...rows[idx],
+          ...input,
+          id: input.id,
+          created_at: rows[idx].created_at,
+          updated_at: ts,
+        };
+        rows[idx] = updated;
+        await writeAll(FILES.guides, rows.sort(bySortOrder));
+        return updated;
+      }
+    }
+    const created: Guide = {
+      ...input,
+      id: input.id ?? randomUUID(),
+      created_at: ts,
+      updated_at: ts,
+    };
+    rows.push(created);
+    await writeAll(FILES.guides, rows.sort(bySortOrder));
+    return created;
+  },
+
+  async deleteGuide(id) {
+    const rows = await readAll<Guide>(FILES.guides);
+    await writeAll(
+      FILES.guides,
+      rows.filter((g) => g.id !== id),
     );
   },
 
