@@ -25,20 +25,25 @@ create policy "guides auth write" on public.guides
 insert into public.guides (id, title, category, content, sort_order) values
   (
     'guide-transport', '地铁 / 火车怎么坐', '交通',
-    $g$城市内：用 Google Maps 或 Citymapper 输入目的地，跟着地铁/公交走即可。
-城际高铁：Trenitalia（红/银箭）与 Italo 两家，官网或 App 提前买更便宜；认准站名（罗马 Termini、佛罗伦萨 S.M.N.、米兰 Centrale、威尼斯 S. Lucia）。
-纸质票上车前在站台打票机验票，电子票免验。
+    $g$**城市内**：用 Google Maps 或 Citymapper 输入目的地，跟着地铁、公交走即可。
 
-小红书搜「意大利高铁购票」有详细图文 👉 https://www.xiaohongshu.com/$g$,
+**城际高铁**：
+
+- Trenitalia（红/银箭）与 Italo 两家，官网或 App 提前买更便宜
+- 认准站名：罗马 Termini、佛罗伦萨 S.M.N.、米兰 Centrale、威尼斯 S. Lucia
+- 纸质票上车前在站台打票机验票，电子票免验
+
+详细图文 👉 [小红书搜「意大利高铁购票」](https://www.xiaohongshu.com/)$g$,
     1
   ),
   (
     'guide-food', '怎么找附近好吃的餐馆', '餐饮',
-    $g$Google Maps 搜「restaurant」或「trattoria」，按评分和评论数排，避开景点门口的游客店。
-菜单上「coperto」是餐位费，属正常；小费非强制。
-想吃地道的：找本地人多、菜单没有一堆外语翻译的小馆子。
+    $g$打开 **Google Maps** 搜 `restaurant` 或 `trattoria`，按评分和评论数排，避开景点门口的游客店。
 
-小红书搜「罗马 / 佛罗伦萨 美食」有很多本地推荐 👉 https://www.xiaohongshu.com/$g$,
+- 菜单上「coperto」是餐位费，属正常；小费非强制
+- 想吃地道的：找本地人多、菜单没有一堆外语翻译的小馆子
+
+本地推荐 👉 [小红书搜「罗马 / 佛罗伦萨 美食」](https://www.xiaohongshu.com/)$g$,
     2
   )
 on conflict (id) do nothing;

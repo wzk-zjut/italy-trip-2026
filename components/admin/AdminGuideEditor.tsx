@@ -103,8 +103,8 @@ function GuideForm({
       </Field>
 
       <Field
-        label="正文"
-        hint="直接写描述（保留换行）。粘贴的网址（如小红书分享链接）会自动变成可点链接。"
+        label="正文（支持 Markdown）"
+        hint="换行会保留；支持 **加粗**、- 列表、### 小标题、[名称](链接)；直接粘贴的网址也会自动变可点链接。"
       >
         <TextArea name="content" defaultValue={guide?.content} rows={8} />
       </Field>
